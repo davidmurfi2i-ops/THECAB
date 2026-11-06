@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Cab</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=DM+Sans:wght@400;500;700&display=swap">
+<style>
+:root{--bg:#07050B;--surf:#15111F;--ink:#fff;--mut:#9C95B0;--blue:#8B3DFF;--onb:#fff;--yel:#FF1F4B;--ok:#2FD27A;--bad:#FF4D6A;--line:#2A2238;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.45 "DM Sans",system-ui,sans-serif}
+#app{max-width:480px;margin:0 auto;height:100%;display:flex;flex-direction:column}
+main{flex:1;overflow-y:auto;padding:18px 18px 24px}
+h1,h2,h3{font-family:"Bricolage Grotesque",system-ui,sans-serif;margin:0;line-height:1.1}
+h1{font-size:34px;font-weight:800;letter-spacing:-.02em}h2{font-size:26px;font-weight:800}h3{font-size:18px;font-weight:600}
+p{margin:0}.mut{color:var(--mut)}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+button:focus-visible,.trk:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.sign{display:inline-block;background:var(--yel);color:#fff;font:800 15px "Bricolage Grotesque",sans-serif;letter-spacing:.12em;padding:6px 16px 5px;border-radius:10px 10px 4px 4px;position:relative;margin-bottom:18px}
+.sign:before,.sign:after{content:"";position:absolute;bottom:-7px;width:10px;height:7px;background:var(--mut);border-radius:0 0 2px 2px}.sign:before{left:12px}.sign:after{right:12px}
+.hero{background:linear-gradient(135deg,#8B3DFF,#FF1F4B);color:#fff;border-radius:28px;padding:22px;display:flex;gap:18px;align-items:center;margin:20px 0 14px}
+.hero p{opacity:.85;font-size:14px}
+.ring{width:92px;height:92px;flex:none}
+.btn{display:block;width:100%;text-align:left;padding:16px 18px;border-radius:18px;background:var(--surf);border:1.5px solid var(--line);margin-top:10px}
+.btn b{display:block;font:600 18px "Bricolage Grotesque",sans-serif}
+.btn span{color:var(--mut);font-size:14px}
+.btn.y{background:var(--yel);color:#fff;border-color:var(--yel)}.btn.y span{color:#ffd6de}
+.cta{background:var(--blue);color:var(--onb);font-weight:700;padding:15px;border-radius:16px;width:100%;margin-top:14px}
+nav{display:flex;border-top:1px solid var(--line);background:var(--surf);padding:6px 10px 8px}
+nav button{flex:1;padding:6px;border-radius:12px;color:var(--mut);font-size:12px;font-weight:700;display:flex;flex-direction:column;align-items:center;gap:2px}
+nav button i{font-style:normal;font-size:22px}
+nav button.on{color:#fff;background:linear-gradient(135deg,#8B3DFF66,#FF1F4B66)}
+.bar{height:8px;background:var(--line);border-radius:8px;overflow:hidden;margin:14px 0 20px}.bar div{height:100%;background:var(--blue);transition:width .3s}
+.q{font:600 21px/1.25 "Bricolage Grotesque",sans-serif;margin-bottom:18px}
+.opt{display:flex;gap:12px;width:100%;text-align:left;padding:14px;border:2px solid var(--line);background:var(--surf);border-radius:16px;margin-bottom:10px}
+.opt u{text-decoration:none;font-weight:700;color:var(--mut);width:22px;flex:none}
+.opt.ok{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 14%,var(--surf))}
+.opt.no{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 14%,var(--surf))}
+.exp{padding:14px;border-radius:16px;background:var(--surf);border:1.5px dashed var(--line);margin:14px 0 0;font-size:15px}
+.row{display:flex;justify-content:space-between;align-items:center}
+.seg{display:grid;grid-template-columns:1fr 1fr;background:var(--line);border-radius:14px;padding:4px;margin:14px 0}
+.seg button{padding:10px;border-radius:11px;font-weight:700;color:var(--mut)}.seg button.on{background:var(--surf);color:var(--ink)}
+.gauges{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.g{width:100%;display:block}.g .t{fill:none;stroke:var(--line);stroke-width:7;stroke-linecap:round}.g .r{fill:none;stroke:var(--bad);stroke-width:7}
+.g line{stroke:var(--ink);stroke-width:3;stroke-linecap:round}.g text{fill:var(--ink);font:800 15px "Bricolage Grotesque",sans-serif;text-anchor:middle}.g .s{fill:var(--mut);font:500 8px "DM Sans";}
+.coach{display:flex;gap:12px;align-items:center;background:var(--surf);border:1.5px solid var(--line);border-radius:18px;padding:10px 12px;min-height:64px}
+.badge{flex:none;width:44px;height:44px;border-radius:12px;background:var(--yel);color:#fff;display:grid;place-items:center;font:800 22px "Bricolage Grotesque"}
+#msg{font-size:14px}#msg.ok{color:var(--ok)}#msg.bad{color:var(--bad)}#msg.warn{color:#FFB347}
+.mis{margin:12px 0}.mis small{color:var(--mut);font-weight:700}.mis p{font-weight:700;margin-top:2px}
+.dots{display:flex;gap:5px;margin-top:8px}.dots i{flex:1;height:5px;border-radius:5px;background:var(--line)}.dots i.d{background:var(--ok)}.dots i.c{background:var(--yel)}
+.pedals{display:grid;gap:10px;margin:12px 0}
+.pd{height:132px;border-radius:20px;border:2px solid var(--line);background:var(--surf);font-weight:700;display:flex;align-items:flex-end;justify-content:center;padding-bottom:12px;touch-action:none;user-select:none;-webkit-user-select:none;position:relative;overflow:hidden}
+.pd.on{background:var(--blue);color:var(--onb);border-color:var(--blue)}
+.pd.gas.on{background:var(--ok);border-color:var(--ok);color:#fff}.pd.brk.on{background:var(--bad);border-color:var(--bad);color:#fff}
+.trk .fill{position:absolute;left:0;right:0;top:0;background:var(--yel);opacity:.9}.trk span{position:relative;color:var(--ink)}
+.gears{display:flex;gap:6px}.gears button{flex:1;height:50px;border-radius:14px;background:var(--surf);border:2px solid var(--line);font:800 18px "Bricolage Grotesque"}
+.gears button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.res{text-align:center;padding:30px 0}.res h1{font-size:64px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+.scene{width:100%;display:block;border-radius:22px;border:1.5px solid var(--line);margin-bottom:6px}
+#f_clutch{background:var(--blue)}#f_brakeV{background:var(--yel)}#f_gas{background:#fff;opacity:.9}#p_gas span{mix-blend-mode:difference}
+.pd span{font-size:14px}.pd{height:150px}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+.tile{display:flex;flex-direction:column;gap:4px;text-align:left;padding:16px;border-radius:22px;background:var(--surf);border:1.5px solid var(--line);min-height:140px}
+.tile i{font-style:normal;font-size:30px;margin-bottom:auto}.tile b{font:600 17px "Bricolage Grotesque"}.tile span{color:var(--mut);font-size:13px}
+.tile.g1{background:linear-gradient(140deg,#8B3DFF,#4b1aa6);border:0}.tile.g2{background:linear-gradient(140deg,#FF1F4B,#8a0c2a);border:0}.tile.g1 span,.tile.g2 span{color:#ffffffcc}
+.sg{width:150px;height:150px}.big{font:800 56px "Bricolage Grotesque";margin:14px 0}
+.bw{display:flex;height:18px;border-radius:9px;overflow:hidden;background:var(--line);margin:16px 0}
+.rbox{width:100%;height:240px;border-radius:26px;font:800 24px "Bricolage Grotesque";background:var(--blue);color:#fff;margin-top:14px;touch-action:manipulation}
+.exp.ch{line-height:1.7}
+</style></head><body>
+<div id="app"><main id="v"></main>
+<nav><button data-t="home"><i>🏠</i>Start</button><button data-t="theory"><i>📖</i>Theorie</button><button data-t="tools"><i>🎯</i>Üben</button><button data-t="drive"><i>🚗</i>Fahrstunde</button></nav></div>
+<script>
+const $=s=>document.querySelector(s),V=$("#v");
+const Q=[
+["Vorfahrt","Sie kommen an eine Kreuzung ohne Schilder oder Ampel. Von rechts nähert sich ein Fahrzeug. Wer fährt zuerst?",["Ich, weil ich schneller bin","Das Fahrzeug von rechts","Wer zuerst hupt"],1,"Es gilt „Rechts vor links“. Das Fahrzeug von rechts hat Vorfahrt."],
+["Vorfahrt","Was bedeutet das Zeichen „Vorfahrt gewähren“ (Dreieck mit Spitze nach unten)?",["Ich darf nur geradeaus fahren","Ich muss die Vorfahrt beachten und notfalls warten","Ich habe Vorfahrt"],1,"Sie müssen anderen Verkehr durchlassen und wenn nötig warten."],
+["Vorfahrt","Sie sehen ein rotes, achteckiges Stoppschild. Was tun Sie?",["Anhalten, auch wenn die Straße frei ist","Langsam rollen, wenn frei","Nur bei Verkehr anhalten"],0,"Bei Stopp müssen Sie immer an der Haltlinie vollständig anhalten."],
+["Vorfahrt","Im Kreisverkehr mit Zeichen „Kreisverkehr“ und „Vorfahrt gewähren“ am Eingang: Wer hat Vorfahrt?",["Wer einfahren will","Wer sich bereits im Kreis befindet","Rechts vor links"],1,"Fahrzeuge im Kreis haben Vorfahrt. Beim Verlassen blinken Sie rechts."],
+["Schilder","Was bedeutet die gelbe Raute mit weißem Rand?",["Ich fahre auf einer Vorfahrtstraße","Parken erlaubt","Gefahrenstelle"],0,"Sie haben Vorfahrt, bis die Raute durchgestrichen endet."],
+["Schilder","Ein rundes Schild mit rotem Rand und der Zahl 50. Was gilt?",["Mindestgeschwindigkeit 50","Höchstgeschwindigkeit 50 km/h","Empfohlenes Tempo"],1,"Das ist ein Verbot: Schneller als 50 km/h ist nicht erlaubt."],
+["Schilder","Eingeschränktes Haltverbot (blaues Schild, roter Rand, ein Schrägstrich). Was ist erlaubt?",["Halten bis zu 3 Minuten","Dauerhaft parken","Gar nichts"],0,"Beim eingeschränkten Haltverbot darf man bis zu 3 Minuten halten."],
+["Tempo & Abstand","Welche Höchstgeschwindigkeit gilt für Pkw innerorts, wenn nichts anderes angezeigt ist?",["30 km/h","50 km/h","60 km/h"],1,"Innerorts sind es 50 km/h."],
+["Tempo & Abstand","Welche Höchstgeschwindigkeit gilt für Pkw ohne Anhänger außerorts (Landstraße)?",["80 km/h","100 km/h","120 km/h"],1,"Außerorts sind 100 km/h erlaubt, sofern nichts anderes gilt."],
+["Tempo & Abstand","Wie hoch ist die Richtgeschwindigkeit auf Autobahnen?",["100 km/h","130 km/h","150 km/h"],1,"Empfohlen sind 130 km/h. Bei Unfällen kann Schneller-Fahren die Mitschuld erhöhen."],
+["Tempo & Abstand","Wie lang ist bei 50 km/h etwa der Reaktionsweg (1 Sekunde Reaktion)?",["ca. 5 m","ca. 15 m","ca. 30 m"],1,"Faustformel: (Tempo ÷ 10) × 3 = 15 m."],
+["Tempo & Abstand","Wie lang ist bei 50 km/h etwa der Bremsweg bei normaler Bremsung?",["ca. 25 m","ca. 10 m","ca. 50 m"],0,"Faustformel: (Tempo ÷ 10) × (Tempo ÷ 10) = 25 m."],
+["Tempo & Abstand","Welchen Abstand sollten Sie bei 80 km/h mindestens halten (Faustformel „halber Tacho“)?",["ca. 20 m","ca. 40 m","ca. 80 m"],1,"Halber Tachowert in Metern: 80 km/h → 40 m."],
+["Technik","Wie viel Profiltiefe müssen Reifen mindestens haben?",["1,6 mm","3 mm","0,5 mm"],0,"Gesetzlich mindestens 1,6 mm. Empfohlen werden mehr, bei Winterreifen etwa 4 mm."],
+["Technik","Die rote Öldruck-Kontrollleuchte leuchtet während der Fahrt. Was tun Sie?",["Weiterfahren bis zur Werkstatt","Sofort sicher anhalten und Motor ausschalten","Schneller fahren"],1,"Fehlender Öldruck kann in kürzester Zeit zum Motorschaden führen."],
+["Technik","Wann prüfen Sie den Reifendruck am besten?",["Bei kalten Reifen","Nach langer Autobahnfahrt","Nie"],0,"Warme Reifen zeigen höhere Werte. Prüfen Sie daher kalt."],
+["Verhalten","Welche Promillegrenze gilt für Fahranfänger in der Probezeit und unter 21 Jahren?",["0,0 Promille","0,3 Promille","0,5 Promille"],0,"Es gilt absolutes Alkoholverbot."],
+["Verhalten","Darf man beim Fahren das Handy in der Hand halten?",["Ja, kurz zum Lesen","Nein, das ist verboten","Nur an der roten Ampel mit laufendem Motor"],1,"Wer ein Handy hält, handelt ordnungswidrig. Nur Freisprechen ist erlaubt."],
+["Verhalten","Wo bilden Sie auf einer mehrspurigen Autobahn bei Stau die Rettungsgasse?",["Auf dem Seitenstreifen","Zwischen dem linken und dem daneben liegenden Fahrstreifen","In der Mitte"],1,"Die Gasse entsteht immer zwischen ganz links und der Spur rechts daneben."],
+["Verhalten","Bis wann brauchen Kinder einen geeigneten Kindersitz?",["Bis 12 Jahre oder 150 cm","Bis 6 Jahre","Bis 10 Jahre"],0,"Kinder unter 12 Jahren und kleiner als 150 cm brauchen ein passendes Rückhaltesystem."],
+["Verhalten","Wann ist Überholen verboten?",["Bei unklarer Verkehrslage","Am Tag","Wenn ich der Schnellste bin"],0,"Bei unklarer Verkehrslage dürfen Sie nicht überholen."],
+["Vorfahrt","Sie wollen links abbiegen, Gegenverkehr fährt geradeaus (keine Schilder, keine Ampel). Wer hat Vorfahrt?",["Ich als Linksabbieger","Der entgegenkommende, geradeaus fahrende","Wer zuerst blinkt"],1,"Linksabbieger müssen den Gegenverkehr durchlassen."],
+["Vorfahrt","Ein Einsatzfahrzeug mit Blaulicht und Martinshorn nähert sich. Was tun Sie?",["Weiterfahren, ich habe Vorfahrt","Sofort freie Bahn schaffen","Schneller fahren"],1,"Blaulicht und Martinshorn bedeuten: Alle müssen sofort freie Bahn schaffen."],
+["Vorfahrt","Die Ampel zeigt Rot, daneben ist ein grüner Pfeil für Rechtsabbieger. Was gilt?",["Ich darf sofort fahren","Anhalten, dann vorsichtig abbiegen und Verkehr beachten","Ich muss warten bis Grün"],1,"Beim Grünpfeil erst anhalten, dann abbiegen. Fußgänger und Querverkehr haben Vorrang."],
+["Vorfahrt","Die Ampel ist ausgefallen. Was gilt?",["Rechts vor links, wenn keine Schilder","Wer zuerst da ist","Der Größere"],0,"Ohne Beschilderung gilt die Regel. Zeichen von Polizisten gehen aber immer vor."],
+["Vorfahrt","Ein Fußgänger will am Zebrastreifen die Straße überqueren. Was tun Sie?",["Hupen","Anhalten und ihn passieren lassen","Schneller fahren"],1,"Am Fußgängerüberweg haben Fußgänger Vorrang, wenn sie die Fahrbahn überqueren wollen."],
+["Tempo & Abstand","Bei Nebel mit Sichtweite unter 50 m: Welche Geschwindigkeit ist höchstens erlaubt?",["30 km/h","50 km/h","80 km/h"],1,"Bei weniger als 50 m Sichtweite gilt höchstens 50 km/h, nach Sicht auch langsamer."],
+["Tempo & Abstand","Wie verändert sich der Bremsweg bei nasser Fahrbahn?",["Er bleibt gleich","Er kann doppelt so lang werden","Er wird kürzer"],1,"Nässe verlängert den Bremsweg deutlich, bis etwa auf das Doppelte."],
+["Tempo & Abstand","Sie geraten bei Regen in Aquaplaning. Was tun Sie?",["Voll bremsen","Gas wegnehmen, Kupplung treten, geradeaus halten","Stark lenken"],1,"Kein hartes Bremsen und Lenken. Geradeaus rollen, bis die Reifen wieder greifen."],
+["Tempo & Abstand","Wie weit sollten Sie beim Überholen eines Radfahrers innerorts mindestens seitlich Abstand halten?",["0,5 m","1,5 m","3 m"],1,"Innerorts mindestens 1,5 m, außerorts mindestens 2 m."],
+["Technik","Wann benutzen Sie den Warnblinker?",["Bei Panne, Unfall oder am Stauende","Beim Parken in zweiter Reihe","Immer bei Regen"],0,"Warnblinker zeigen Gefahr an, zum Beispiel bei Pannen oder am Stauende."],
+["Technik","Bei einer Notbremsung mit ABS pulsiert das Bremspedal. Was tun Sie?",["Pedal loslassen","Pedal voll durchtreten und halten","Pumpen"],1,"Das Pulsieren ist normal. Voll durchtreten und gleichzeitig lenken."],
+["Technik","Wann muss ein Pkw zur Hauptuntersuchung (HU)?",["Nach 3 Jahren, danach alle 2 Jahre","Jedes Jahr","Nach 5 Jahren"],0,"Neuwagen zuerst nach 3 Jahren, danach alle 2 Jahre."],
+["Technik","Was gilt bei Glatteis und Schneematsch?",["Winterreifen (Alpine-Symbol) sind Pflicht","Sommerreifen reichen","Nur Schneeketten"],0,"Es gilt die situative Winterreifenpflicht mit M+S und Alpine-Symbol."],
+["Technik","Ein Kindersitz mit dem Rücken zur Fahrtrichtung auf dem Beifahrersitz: Was ist nötig?",["Nichts","Der Beifahrer-Airbag muss deaktiviert sein","Nur Gurt"],1,"Sonst kann der auslösende Airbag das Kind schwer verletzen."],
+["Technik","Welche Ausrüstung muss im Pkw mitgeführt werden?",["Verbandkasten, Warndreieck, Warnweste","Nur Verbandkasten","Feuerlöscher"],0,"Pflicht sind Verbandkasten, Warndreieck und Warnweste."],
+["Technik","Der Reifendruck ist zu niedrig. Was ist die Folge?",["Höherer Verbrauch und Überhitzungsgefahr","Weniger Verschleiß","Kürzerer Bremsweg"],0,"Zu wenig Druck erhöht Verbrauch und Verschleiß und kann zu Überhitzung führen."],
+["Verhalten","Wer muss im Auto angeschnallt sein?",["Nur der Fahrer","Alle Insassen","Nur Vordersitze"],1,"Alle Insassen müssen angeschnallt sein."],
+["Verhalten","Ein Schulbus steht mit eingeschaltetem Warnblinklicht an der Haltestelle. Was tun Sie?",["Nur mit Schrittgeschwindigkeit vorbeifahren","Normal weiterfahren","Hupen"],0,"Vorbeifahren nur mit Schrittgeschwindigkeit, und nicht überholen. Kinder können ausgerechnet dann die Straße queren."],
+["Verhalten","Sie werden müde. Was tun Sie?",["Fenster öffnen und weiterfahren","Bald eine Pause einlegen","Radio lauter"],1,"Müdigkeit ist gefährlich. Machen Sie sofort eine Pause."],
+["Verhalten","Wann darf man hupen?",["Zur Warnung bei Gefahr","Aus Ärger","Zum Grüßen"],0,"Hupen ist nur zur Warnung erlaubt. Innerorts nicht aus Ärger."],
+["Verhalten","Sie nehmen ein Medikament. Worauf achten Sie?",["Auf mögliche Beeinträchtigung der Fahrtüchtigkeit laut Beipackzettel","Nichts","Nur Alkohol meiden"],0,"Manche Medikamente beeinträchtigen die Fahrtüchtigkeit. Lesen Sie den Beipackzettel."],
+["Parken & Halten","Wie weit vor dem Schnittpunkt der Fahrbahnkanten einer Kreuzung ist Parken verboten?",["1 m","5 m","10 m"],1,"Bis 5 m von den Schnittpunkten der Fahrbahnkanten darf nicht geparkt werden."],
+["Parken & Halten","Wo ist Parken grundsätzlich verboten?",["Vor Grundstücksausfahrten","An Straßen mit Parkscheibe","Auf Parkplätzen"],0,"Vor Grundstückseinfahrten und -ausfahrten ist Parken unzulässig."],
+["Parken & Halten","Was bedeutet ein Absolutes Haltverbot (blaues Schild, rote Kreuzung)?",["Nur 3 Minuten halten","Halten und Parken verboten","Nur parken verboten"],1,"Hier darf weder gehalten noch geparkt werden."],
+["Autobahn","Welche Fahrzeuge dürfen auf die Autobahn?",["Nur mit bauartbedingt mindestens 60 km/h","Alle Fahrzeuge","Nur Pkw"],0,"Zugelassen sind nur Kraftfahrzeuge mit einer bauartbedingten Höchstgeschwindigkeit von über 60 km/h."],
+["Autobahn","Wie fahren Sie auf die Autobahn auf?",["Auf dem Beschleunigungsstreifen Tempo anpassen und einfädeln","Anhalten und warten","Gar nicht beschleunigen"],0,"Beschleunigen Sie auf dem Streifen und fädeln Sie sich ein, ohne andere zu behindern."],
+["Autobahn","Dürfen Sie auf der Autobahn rechts überholen?",["Ja, wenn frei","Nein, außer bei Stau mit langsamer Fahrt","Immer"],1,"Rechts überholen ist verboten. Bei zähfließendem Verkehr ist Vorbeifahren mit mäßigem Tempo erlaubt."],
+["Autobahn","Sie haben die Ausfahrt verpasst. Was tun Sie?",["Rückwärts zurückfahren","Bis zur nächsten Ausfahrt weiterfahren","Wenden"],1,"Rückwärtsfahren und Wenden auf der Autobahn sind streng verboten."],
+["Autobahn","Wie weit entfernt stellen Sie auf der Autobahn das Warndreieck auf?",["Mindestens 150 m","10 m","50 m"],0,"Auf der Autobahn mindestens 150 m, auf Landstraßen ca. 100 m, innerorts ca. 50 m."],
+["Erste Hilfe","Welche Nummer wählen Sie bei einem Notfall?",["110","112","116 117"],1,"112 ist der europaweite Notruf für Rettungsdienst und Feuerwehr."],
+["Erste Hilfe","Ein Verunfallter ist bewusstlos, atmet aber. Was tun Sie?",["Stabile Seitenlage","Aufsetzen","Nichts"],0,"In der stabilen Seitenlage bleiben die Atemwege frei."],
+["Erste Hilfe","Wie ist das Verhältnis bei der Wiederbelebung (Herzdruckmassage zu Beatmung)?",["15:1","30:2","10:5"],1,"30 Mal drücken, 2 Mal beatmen, im Takt von 100 bis 120 pro Minute."],
+["Erste Hilfe","Was tun Sie als Erstes an einer Unfallstelle?",["Absichern: Warnblinker, Warndreieck, Warnweste","Fotos machen","Weiterfahren"],0,"Erst Unfallstelle sichern, dann Verletzte versorgen und den Notruf absetzen."],
+["Erste Hilfe","Eine Person blutet stark am Arm. Was tun Sie?",["Druckverband anlegen","Warten","Wunde auswaschen"],0,"Ein Druckverband stoppt starke Blutungen. Danach Notruf."]
+];
+const CATS=[...new Set(Q.map(q=>q[0]))];
+let S={d:{},fs:0};try{S=JSON.parse(localStorage.getItem("cab"))||S}catch(e){}
+const save=()=>{try{localStorage.setItem("cab",JSON.stringify(S))}catch(e){}};
+const shuf=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+let tab="home",loop=null,Z,C;
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>go(b.dataset.t));
+function go(t){tab=t;clearInterval(loop);document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.t==t));V.scrollTop=0;({home,theory,tools,drive:()=>cockpit("M")})[t]()}
+function stats(){const k=Object.keys(S.d),r=k.filter(i=>S.d[i]).length;return{n:k.length,r,w:k.length-r}}
+function home(){const s=stats(),p=Math.round(s.r/Q.length*100),c=2*Math.PI*38;
+V.innerHTML=`<div class="sign">THE CAB</div><h1>Dein Führerschein.<br>Schritt für Schritt.</h1>
+<div class="hero"><svg class="ring" viewBox="0 0 92 92"><circle cx="46" cy="46" r="38" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="9"/><circle cx="46" cy="46" r="38" fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round" stroke-dasharray="${c*p/100} ${c}" transform="rotate(-90 46 46)"/><text x="46" y="52" text-anchor="middle" fill="currentColor" font-weight="800" font-size="20" font-family="Bricolage Grotesque">${p}%</text></svg>
+<div><h3>Level ${Math.floor((S.xp||0)/100)+1} · ${S.xp||0} XP</h3><p>${s.w?s.w+" zum Wiederholen. ":""}${S.fs} Fahrstunde${S.fs==1?"":"n"} bestanden.</p></div></div>
+<button class="btn y" onclick="go('drive')"><b>Fahrstunde starten</b><span>Schalter oder Automatik. Kuppeln, schalten, nicht abwürgen.</span></button>
+<button class="btn" onclick="quiz(shuf(Q.map((_,i)=>i)).slice(0,20),'Prüfung')"><b>Prüfungssimulation</b><span>20 zufällige Fragen, am Ende mit Auswertung.</span></button>
+<button class="btn" onclick="go('theory')"><b>Theorie nach Thema</b><span>${CATS.length} Themen mit Erklärung zu jeder Antwort.</span></button>
+<button class="btn" onclick="go('tools')"><b>Üben und Tools</b><span>Schilder, Bremsweg, Reaktion, Erste Hilfe, Spickzettel.</span></button>`}
+function theory(){const w=Object.keys(S.d).filter(i=>!S.d[i]);
+V.innerHTML=`<h2>Theorie</h2><p class="mut" style="margin-top:6px">Wähle ein Thema und übe mit Erklärungen.</p>
+${w.length?`<button class="btn y" onclick="quiz([${w}],'Fehler wiederholen')"><b>Fehler wiederholen</b><span>${w.length} Frage${w.length>1?"n":""} noch offen</span></button>`:""}
+${CATS.map(c=>{const ids=Q.map((q,i)=>q[0]==c?i:-1).filter(i=>i>=0),d=ids.filter(i=>S.d[i]).length;return`<button class="btn" onclick="quiz([${ids}],'${c}')"><div class="row"><b>${c}</b><span>${d}/${ids.length}</span></div><div class="bar" style="margin:10px 0 0;height:6px"><div style="width:${d/ids.length*100}%"></div></div></button>`}).join("")}`}
+function quiz(ids,title,p){Z={ids,i:0,ok:0,title,ans:null,ord:null,p:p||Q};qr()}
+function qr(){if(Z.i>=Z.ids.length)return qend();const q=Z.p[Z.ids[Z.i]];if(!Z.ord)Z.ord=shuf([0,1,2]);const a=Z.ans;
+V.scrollTop=0;V.innerHTML=`<div class="row"><button onclick="go('${tab=="tools"?"tools":tab=="home"?"home":"theory"}')" class="mut">✕ Beenden</button><span class="mut">${Z.i+1} / ${Z.ids.length}</span></div>
+<div class="bar"><div style="width:${(Z.i+(a!==null))/Z.ids.length*100}%"></div></div><p class="mut" style="margin-bottom:6px">${q[0]}</p><div class="q">${q[1]}</div>
+${Z.ord.map((o,k)=>`<button class="opt ${a!==null?(o==q[3]?"ok":k==a?"no":""):""}" onclick="pick(${k})"><u>${"ABC"[k]}</u>${q[2][o]}</button>`).join("")}
+${a!==null?`<div class="exp"><b>${Z.ord[a]==q[3]?"Richtig.":"Leider falsch."}</b> ${q[4]}</div><button class="cta" onclick="Z.i++;Z.ans=null;Z.ord=null;qr()">${Z.i+1<Z.ids.length?"Weiter":"Ergebnis ansehen"}</button>`:""}`}
+function pick(k){if(Z.ans!==null)return;Z.ans=k;const id=Z.ids[Z.i],r=Z.ord[k]==Z.p[id][3];if(Z.p===Q)S.d[id]=r?1:0;if(r){Z.ok++;S.xp=(S.xp||0)+10}save();qr()}
+function qend(){const p=Math.round(Z.ok/Z.ids.length*100);V.innerHTML=`<div class="res"><div class="sign">${Z.title.toUpperCase()}</div><h1>${p}%</h1><p style="margin:10px 0 22px">${Z.ok} von ${Z.ids.length} richtig. ${p>=90?"Stark, das reicht für die Prüfung.":p>=70?"Gut, noch etwas Feinschliff.":"Weiter üben. Du schaffst das."}</p><button class="cta" onclick="go('theory')">Zur Theorie</button><button class="btn" style="text-align:center" onclick="go('home')">Zurück zum Start</button></div>`}
+
+/* ---------- Üben ---------- */
+let RT;
+const sv=x=>`<svg viewBox="0 0 100 100" class="sg">${x}</svg>`;
+const rc=(t)=>`<circle cx="50" cy="50" r="46" fill="#fff" stroke="#d40000" stroke-width="10"/><text x="50" y="62" text-anchor="middle" font-size="34" font-weight="800" fill="#111">${t}</text>`;
+const SG=[
+["Stoppschild: anhalten",sv(`<polygon points="30,4 70,4 96,30 96,70 70,96 30,96 4,70 4,30" fill="#d40000" stroke="#fff" stroke-width="4"/><text x="50" y="58" text-anchor="middle" fill="#fff" font-size="24" font-weight="800">STOP</text>`)],
+["Vorfahrt gewähren",sv(`<polygon points="50,94 4,12 96,12" fill="#fff" stroke="#d40000" stroke-width="9" stroke-linejoin="round"/>`)],
+["Vorfahrtstraße",sv(`<polygon points="50,2 98,50 50,98 2,50" fill="#fff" stroke="#999" stroke-width="3"/><polygon points="50,12 88,50 50,88 12,50" fill="#FFC72C"/>`)],
+["Höchstgeschwindigkeit 30 km/h",sv(rc(30))],["Höchstgeschwindigkeit 50 km/h",sv(rc(50))],
+["Einbahnstraße",sv(`<rect x="4" y="22" width="92" height="56" rx="8" fill="#0a4da6" stroke="#fff" stroke-width="3"/><path d="M20 50H74M58 35L75 50L58 65" stroke="#fff" stroke-width="8" fill="none"/>`)],
+["Einfahrt verboten",sv(`<circle cx="50" cy="50" r="46" fill="#d40000" stroke="#fff" stroke-width="3"/><rect x="20" y="42" width="60" height="16" fill="#fff"/>`)],
+["Eingeschränktes Haltverbot (bis 3 Min. halten)",sv(`<circle cx="50" cy="50" r="42" fill="#0a4da6" stroke="#d40000" stroke-width="9"/><path d="M22 78L78 22" stroke="#d40000" stroke-width="9"/>`)],
+["Absolutes Haltverbot",sv(`<circle cx="50" cy="50" r="42" fill="#0a4da6" stroke="#d40000" stroke-width="9"/><path d="M22 78L78 22M22 22L78 78" stroke="#d40000" stroke-width="9"/>`)],
+["Kreisverkehr",sv(`<circle cx="50" cy="50" r="46" fill="#0a4da6"/><circle cx="50" cy="50" r="22" fill="none" stroke="#fff" stroke-width="7"/><polygon points="40,22 62,28 46,42" fill="#fff"/>`)],
+["Gefahrstelle",sv(`<polygon points="50,6 96,90 4,90" fill="#fff" stroke="#d40000" stroke-width="9" stroke-linejoin="round"/><text x="50" y="78" text-anchor="middle" font-size="44" font-weight="800" fill="#111">!</text>`)]];
+function tools(){V.innerHTML=`<h2>Üben</h2><p class="mut" style="margin-top:6px">Alles fürs Auto und die Prüfung.</p><div class="tiles">
+<button class="tile g1" onclick="signs()"><i>🛑</i><b>Schilder-Trainer</b><span>${SG.length} Zeichen erkennen</span></button>
+<button class="tile g2" onclick="brems()"><i>📏</i><b>Bremsweg-Rechner</b><span>Reaktion, Bremsen, Anhalten</span></button>
+<button class="tile" onclick="react()"><i>⚡</i><b>Reaktionstest</b><span>Wie schnell bist du?</span></button>
+<button class="tile" onclick="cheat()"><i>📌</i><b>Spickzettel</b><span>Zahlen und Faustformeln</span></button>
+<button class="tile" onclick="quiz(Q.map((q,i)=>q[0]=='Erste Hilfe'?i:-1).filter(i=>i>=0),'Erste Hilfe')"><i>🩹</i><b>Erste Hilfe</b><span>Im Notfall richtig handeln</span></button>
+<button class="tile" onclick="quiz(shuf(Q.map((_,i)=>i)).slice(0,5),'Blitzrunde')"><i>🔥</i><b>Blitzrunde</b><span>5 zufällige Fragen</span></button></div>`}
+function signs(){const n=SG.map(s=>s[0]);const p=SG.map(s=>["Schilder",`<div style="display:flex;justify-content:center;margin-bottom:12px">${s[1]}</div>Was bedeutet dieses Zeichen?`,[s[0],...shuf(n.filter(x=>x!=s[0])).slice(0,2)],0,"Das ist: "+s[0]+"."]);quiz(shuf(p.map((_,i)=>i)),"Schilder",p)}
+const back=`<button class="mut" onclick="clearTimeout(RT);go('tools')">‹ Zurück</button>`;
+function brems(){V.innerHTML=`${back}<h2 style="margin-top:10px">Bremsweg-Rechner</h2><div class="big" id="bv"></div><input type="range" id="bs" min="10" max="200" step="5" value="50" style="width:100%;accent-color:#8B3DFF" aria-label="Geschwindigkeit"><label style="display:block;margin:14px 0"><input type="checkbox" id="wt"> Nasse Fahrbahn (Bremsweg ×2)</label><div id="bo"></div>`;
+const f=()=>{const v=+$("#bs").value,w=$("#wt").checked?2:1,r=v*.3,b=v*v/100*w,t=r+b,mx=60+400*w;$("#bv").textContent=v+" km/h";
+$("#bo").innerHTML=`<div class="bw"><div style="width:${r/mx*100}%;background:var(--blue)"></div><div style="width:${b/mx*100}%;background:var(--yel)"></div></div>
+<p>🟣 Reaktionsweg: <b>${r.toFixed(0)} m</b></p><p>🔴 Bremsweg: <b>${b.toFixed(0)} m</b></p><p style="margin-top:8px">Anhalteweg gesamt: <b>${t.toFixed(0)} m</b> (ca. ${(t/4.5).toFixed(0)} Autolängen)</p>`};
+$("#bs").oninput=$("#wt").onchange=f;f()}
+function react(){let st=0,t0;V.innerHTML=`${back}<h2 style="margin-top:10px">Reaktionstest</h2><p class="mut">Tippe, sobald das Feld grün wird.</p><button id="rb" class="rbox">Tippen zum Start</button><p id="rr" style="margin-top:14px"></p>`;const b=$("#rb");
+b.onclick=()=>{if(st==0){st=1;b.textContent="Warten …";b.style.background="var(--yel)";RT=setTimeout(()=>{st=2;t0=performance.now();b.textContent="JETZT!";b.style.background="var(--ok)"},1500+Math.random()*2500)}
+else if(st==1){clearTimeout(RT);st=0;b.textContent="Zu früh. Nochmal tippen.";b.style.background="var(--surf)"}
+else{const ms=Math.round(performance.now()-t0);st=0;b.textContent="Nochmal";b.style.background="var(--blue)";$("#rr").innerHTML=`<b>${ms} ms</b><br>Bei 50 km/h fährst du in dieser Zeit ${(ms/1000*50/3.6).toFixed(1)} m. ${ms<300?"Sehr schnell.":ms<450?"Normal.":"Hier hilft mehr Abstand."}`}}}
+function cheat(){V.innerHTML=`${back}<h2 style="margin:10px 0">Spickzettel</h2><div class="exp ch"><b>Tempo</b><br>Innerorts 50 · Außerorts 100 · Autobahn Richtwert 130 km/h<br><br><b>Faustformeln</b><br>Reaktionsweg = (v ÷ 10) × 3<br>Bremsweg = (v ÷ 10)²<br>Anhalteweg = beides zusammen<br>Abstand = halber Tacho in Metern<br><br><b>Zahlen</b><br>Profiltiefe mindestens 1,6 mm<br>Halten vor Kreuzung: 5 m Abstand zum Schnittpunkt<br>Radfahrer überholen: innerorts 1,5 m, außerorts 2 m<br>Probezeit: 0,0 Promille<br>HU: erst nach 3 Jahren, dann alle 2<br>Notruf: 112<br>Herzdruckmassage: 30:2, Takt 100 bis 120 pro Minute<br>Warndreieck: innerorts 50 m, Landstraße 100 m, Autobahn mind. 150 m</div>`}
+
+/* ---------- Fahrschule ---------- */
+const K={1:.0055,2:.0095,3:.014,4:.019,5:.025,R:.006};
+const MM=[["Kupplung treten und Motor starten",()=>C.eng],["1. Gang einlegen",()=>C.gear===1],["Anfahren: Kupplung langsam kommen lassen, dazu leicht Gas",()=>C.gear===1&&C.v>8],["Bei ca. 3.000 U/min in den 2. Gang schalten",()=>C.gear===2&&C.v>12],["In den 3. Gang schalten und 35 km/h erreichen",()=>C.gear===3&&C.v>35],["Kupplung treten, bremsen und stehen bleiben",()=>C.eng&&C.v<.5&&C.clutch>.75]];
+const MA=[["Bremse treten und Motor starten",()=>C.eng],["Mit getretener Bremse D einlegen",()=>C.gear=="D"],["Bremse lösen: Das Auto kriecht von allein",()=>C.gear=="D"&&!C.brake&&C.v>4],["Gas geben bis 30 km/h",()=>C.v>30],["Anhalten: Bremse treten bis Stillstand",()=>C.v<.5&&C.brake],["Bremse halten und P einlegen",()=>C.gear=="P"&&C.eng]];
+function scene(){const B=[[0,50,22],[26,70,30],[60,40,18],[82,62,26],[112,48,20],[136,76,28],[168,44,12]];let b="",d="";
+for(let k=0;k<3;k++)B.forEach(x=>b+=`<rect x="${k*180+x[0]}" y="${104-x[1]}" width="${x[2]}" height="${x[1]}" fill="#2a1048"/>`);
+for(let i=0;i<9;i++)d+=`<rect x="${i*50}" y="121" width="26" height="3" fill="#fff" opacity=".7"/>`;
+const wh=(id,x)=>`<g transform="translate(${x} 40)"><g id="${id}"><circle r="10" fill="#111"/><circle r="5.5" fill="#ddd"/><path d="M-5 0H5M0 -5V5" stroke="#555" stroke-width="2"/></g></g>`;
+return`<svg class="scene" viewBox="0 0 360 140" role="img" aria-label="Auto"><defs><linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#14082b"/><stop offset="1" stop-color="#5a1052"/></linearGradient></defs>
+<rect width="360" height="140" fill="url(#sk)"/><g id="bg">${b}</g><rect y="104" width="360" height="36" fill="#0b0910"/><rect y="104" width="360" height="2" fill="#8B3DFF"/><g id="rd">${d}</g>
+<g id="car"><circle id="ex" cx="-6" cy="36" r="6" fill="#aaa" opacity="0"/><polygon id="hl" points="112,30 190,18 190,46" fill="#fff6c0" opacity="0"/>
+<rect x="0" y="22" width="112" height="17" rx="7" fill="#FF1F4B"/><path d="M20 23L32 5H66L84 23Z" fill="#FF1F4B"/><path d="M30 21L37 8H53V21Z M57 21V8H66L77 21Z" fill="#2b1250"/>
+<rect id="tl" x="-2" y="26" width="6" height="7" rx="2" fill="#ff0033" opacity=".3"/><rect x="108" y="26" width="5" height="6" rx="2" fill="#fff"/>${wh("w1",24)}${wh("w2",88)}</g></svg>`}
+function cockpit(m){clearInterval(loop);const M=m=="M";
+C={m,eng:0,v:0,rpm:0,gear:M?"N":"P",clutch:0,gas:0,brakeV:0,brake:false,mi:0,stalls:0,good:0,off:0,wa:0,pit:0,f:0,sh:0,ag:1,
+msg:M?"Ziehe die Kupplung ganz nach unten und starte den Motor.":"Ziehe das Bremspedal nach unten und starte den Motor. Kein Kuppeln nötig."};
+const gr=(id,lab,red)=>`<svg class="g" viewBox="0 0 120 112"><path class="t" pathLength="100" d="M26.1 93.9A48 48 0 1 1 93.9 93.9"/>${red?`<path class="r" pathLength="100" stroke-dasharray="0 ${red} ${100-red}" d="M26.1 93.9A48 48 0 1 1 93.9 93.9"/>`:""}<line id="n${id}" x1="60" y1="60" x2="60" y2="22"/><circle cx="60" cy="60" r="5" fill="var(--ink)"/><text id="t${id}" x="60" y="92">0</text><text class="s" x="60" y="104">${lab}</text></svg>`;
+const pd=(id,key,lab)=>`<div class="pd trk" id="p_${id}" tabindex="0" role="slider" aria-label="${lab}"><div class="fill" id="f_${id}" style="height:0"></div><span>${lab}</span></div>`;
+const gears=(M?["R","N",1,2,3,4,5]:["P","R","N","D"]).map(g=>`<button data-g="${g}" onclick="shift('${g}')" aria-label="Gang ${g}">${g}</button>`).join("");
+V.innerHTML=`<div class="row"><h2>Fahrstunde</h2><span class="mut" id="st"></span></div>
+<div class="seg"><button class="${M?"on":""}" onclick="cockpit('M')">Schalter</button><button class="${M?"":"on"}" onclick="cockpit('A')">Automatik</button></div>${scene()}
+<div class="mis"><small id="mn"></small><p id="mt"></p><div class="dots" id="dt"></div></div>
+<div class="gauges">${gr("s","km/h")}${gr("r","U/min",14)}</div>
+<div class="coach"><div class="badge" id="gb">${C.gear}</div><div id="msg">${C.msg}</div></div>
+<div class="pedals" style="grid-template-columns:repeat(${M?3:2},1fr)">${M?pd("clutch","clutch","Kupplung"):""}${pd("brakeV","brakeV","Bremse")}${pd("gas","gas","Gas")}</div>
+<div class="gears">${gears}</div><button class="cta" onclick="startEng()">Motor starten</button>
+<p class="mut" style="font-size:13px;margin-top:12px">Ziehe die Pedale mit dem Finger nach unten wie mit dem Fuß. Je weiter, desto stärker.${M?" Der Schleifpunkt der Kupplung liegt etwa in der Mitte.":""}</p>`;
+(M?["clutch","brakeV","gas"]:["brakeV","gas"]).forEach(k=>pedal(k));
+loop=setInterval(tick,50);tick()}
+function pedal(k){const t=$("#p_"+k);let d=0;const set=y=>{const r=t.getBoundingClientRect();C[k]=Math.min(1,Math.max(0,(y-r.top)/r.height))};
+t.onpointerdown=e=>{d=1;t.setPointerCapture(e.pointerId);set(e.clientY)};t.onpointermove=e=>{if(d)set(e.clientY)};t.onpointerup=t.onpointercancel=()=>d=0;
+t.onkeydown=e=>{const s=e.key=="ArrowDown"?.1:e.key=="ArrowUp"?-.1:0;C[k]=Math.min(1,Math.max(0,C[k]+s))}}
+function say(t,tone){C.msg=t;const e=$("#msg");if(e){e.textContent=t;e.className=tone||""}}
+function startEng(){if(C.eng)return say("Der Motor läuft schon.");
+if(C.m=="M"){if(C.clutch<.75)return say("Erst die Kupplung ganz durchtreten, sonst ruckt das Auto an.","warn");C.eng=1;C.rpm=900;say("Motor läuft. Jetzt den 1. Gang einlegen.","ok")}
+else{if(!C.brake)return say("Erst die Bremse treten, dann starten.","warn");if(C.gear!="P"&&C.gear!="N")return say("Zum Starten P oder N wählen.","warn");C.eng=1;C.rpm=900;say("Motor läuft. Bremse halten und D einlegen.","ok")}}
+function shift(g){const p=C.gear;if(p===g)return;
+if(C.m=="M"){if(C.clutch<.75)return say("Kratzen! Immer erst die Kupplung ganz durchtreten.","bad");
+if(g=="R"&&C.v>3)return say("Erst zum Stehen kommen, dann in den Rückwärtsgang.","warn");
+if(typeof g=="number"&&typeof p=="number"&&g>p){if(C.rpm>=2200&&C.rpm<=4600){C.good++;say("Sauber hochgeschaltet.","ok")}else say(C.rpm<2200?"Etwas früh. Besser bei 2.500 bis 4.000 U/min schalten.":"Spät geschaltet. Der Motor dreht schon sehr hoch.","warn")}
+else say(g=="N"?"Leerlauf.":"Gang "+g+" ist drin. Kupplung langsam kommen lassen.");C.gear=g}
+else{if(p=="P"&&!C.brake)return say("Zum Verlassen von P die Bremse treten.","warn");if(!C.eng&&g!="P"&&g!="N")return say("Erst den Motor starten.","warn");
+if((g=="R"||g=="D"||g=="P")&&C.v>3)return say("Erst anhalten, dann den Wählhebel bewegen.","warn");if(g=="P")C.v=0;C.gear=g;say(g=="D"?"D eingelegt. Bremse lösen, das Auto kriecht an.":g=="P"?"P eingelegt. Das Auto ist gesichert.":g=="R"?"Rückwärts. Schau dich um.":"Neutral.",g=="D"||g=="P"?"ok":"")}}
+function stall(){C.eng=0;C.rpm=0;C.stalls++;C.mi=0;C.sh=8;say("Abgewürgt! Kupplung treten und neu starten. Lass die Kupplung langsamer kommen oder gib mehr Gas.","bad")}
+function tick(){if(!$("#ns"))return;const M=C.m=="M",g=C.gear;C.brake=C.brakeV>.15;const pv=C.v,bd=C.brakeV*1.3;let v=C.v,rpm=C.rpm;
+if(!C.eng){rpm*=.7;v-=.05+v*.01+bd}
+else if(M){const e=Math.min(1,Math.max(0,(.75-C.clutch)/.45)),free=900+C.gas*5600,kk=K[g];
+ if(kk&&e>.02){const pull=.07*(.0055/kk),cap=.6*Math.pow(.0055/kk,.8),gap=free*kk-v;v+=Math.min(cap,Math.max(-.12,gap*pull))*e;
+  const w=v/kk;rpm+=(free*(1-e)+w*e-rpm)*.2;
+  if(w>7000&&e>.4){v=7000*kk;say("Zu hoch gedreht! Der Gang passt nicht zur Geschwindigkeit.","bad")}
+  if(e>.8&&rpm<500){C.v=Math.max(0,v-bd);return stall()}}
+ else{rpm+=(free-rpm)*.2;v-=.03+v*.003}
+ v-=bd}
+else{const cr=g=="D"?6:4;
+ if(g=="D"||g=="R"){const tv=C.brake?0:Math.max(cr,C.gas*(g=="D"?150:18));v+=Math.min(.7,Math.max(-.3,(tv-v)*.04))}else v-=.05+v*.01;
+ v-=bd;if(g=="P")v=0;
+ const th=[0,15,30,45,65,90,200],i=th.findIndex((t,j)=>v<th[j+1]);C.ag=i+1;rpm=Math.min(6500,800+(v-th[i])/(th[i+1]-th[i])*2400+C.gas*1800)}
+v=Math.max(0,v-v*.004);C.v=v;C.rpm=Math.min(6800,rpm);
+const Ms=M?MM:MA;if(C.mi<Ms.length&&C.eng&&Ms[C.mi][1]()){C.mi++;if(C.mi==Ms.length){S.fs++;save();say("Fahrstunde bestanden"+(C.stalls?" mit "+C.stalls+" Abwürger"+(C.stalls>1?"n":""):" ohne Abwürgen")+".","ok")}else say("Geschafft. Weiter geht es.","ok")}
+else if(!C.eng&&C.mi>0&&C.mi<Ms.length)C.mi=0;
+const dir=g=="R"?-1:1,R=f=>-135+270*Math.min(1,f);C.off+=dir*C.v*.25;C.wa+=dir*Math.min(C.v,70)*1.1;C.f++;
+C.pit+=(Math.max(-4,Math.min(4,-(C.v-pv)*10))-C.pit)*.25;
+const sx=C.sh>0?(C.sh--,C.f%2?4:-4):0,vy=C.eng?Math.sin(C.f*2.2)*(.3+C.rpm/7000):0,md=(x,n)=>((x%n)+n)%n;
+$("#car").setAttribute("transform",`translate(${110+sx} ${66+vy}) rotate(${C.pit} 56 40)`);
+$("#w1").setAttribute("transform",`rotate(${C.wa})`);$("#w2").setAttribute("transform",`rotate(${C.wa})`);
+$("#bg").setAttribute("transform",`translate(${-md(C.off*.3,180)} 0)`);$("#rd").setAttribute("transform",`translate(${-md(C.off,50)} 0)`);
+$("#tl").setAttribute("opacity",C.brake?1:.3);$("#hl").setAttribute("opacity",C.eng?.22:0);$("#ex").setAttribute("opacity",C.eng?.1+C.gas*.5:0);
+$("#ns").setAttribute("transform",`rotate(${R(C.v/180)} 60 60)`);$("#nr").setAttribute("transform",`rotate(${R(C.rpm/7000)} 60 60)`);
+$("#ts").textContent=Math.round(C.v);$("#tr").textContent=Math.round(C.rpm/10)*10;
+$("#gb").textContent=g=="D"&&C.eng?"D"+C.ag:g;
+document.querySelectorAll(".gears button").forEach(b=>b.classList.toggle("on",b.dataset.g==g));
+["clutch","brakeV","gas"].forEach(k=>{const f=$("#f_"+k);if(f)f.style.height=C[k]*100+"%"});
+const done=C.mi>=Ms.length;$("#mn").textContent=done?"Abgeschlossen":"Aufgabe "+(C.mi+1)+" von "+Ms.length;$("#mt").textContent=done?"Wechsle den Modus oder fahr einfach weiter.":Ms[C.mi][0];
+$("#dt").innerHTML=Ms.map((_,i)=>`<i class="${i<C.mi?"d":i==C.mi?"c":""}"></i>`).join("");$("#st").textContent=C.stalls+" abgewürgt"+(M?" · "+C.good+" sauber":"")}
+go("home");
+</script></body></html>
